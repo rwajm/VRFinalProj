@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 
     public PlayerData playerData = new PlayerData();
 
-    // ·¹º§¾÷ ÀÌº¥Æ® (UI¿¡¼­ ÆË¾÷ ¶ç¿ì·Á°í ¾¸)
+    // ë ˆë²¨ì—… ì´ë²¤íŠ¸ (UIì—ì„œ íŒì—… ë„ìš°ë ¤ê³  ì”€)
     public event Action OnLevelUp;
 
     private int lastLevel;
@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
 
     private int GetExpByAnimal(AnimalType type)
     {
-        // µ¿¹°º° °æÇèÄ¡ Â÷µî
+        // ë™ë¬¼ë³„ ê²½í—˜ì¹˜ ì°¨ë“±
         switch (type)
         {
             case AnimalType.Chicken: return 10;

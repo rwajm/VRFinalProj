@@ -1178,16 +1178,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 6332367137715055666}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af14eadb172883f49b438b7fb6b8db7c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f00a87fa21db374288b913f8b076d5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectibleType: cat
+  animalType: 4
   rarity: 1
-  playerCharacter: {fileID: 0}
   collectibleLayer:
     serializedVersion: 2
-    m_Bits: 8
-  touchRadius: 2
+    m_Bits: 4294967295
+  maxClickScreenDistance: 80
+  maxCollectDistanceFromPlayer: 20
 --- !u!143 &1462337592750479245
 CharacterController:
   m_ObjectHideFlags: 0

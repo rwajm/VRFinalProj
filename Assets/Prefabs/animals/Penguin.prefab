@@ -714,7 +714,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4501379328314740138}
-  - component: {fileID: -5799720387886450205}
+  - component: {fileID: 1210730692730169357}
   - component: {fileID: 8842701807193491630}
   - component: {fileID: 1628812314796391055}
   - component: {fileID: 7204198405502287086}
@@ -743,7 +743,7 @@ Transform:
   - {fileID: 7944119155306303141}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-5799720387886450205
+--- !u!114 &1210730692730169357
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -752,16 +752,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7681152787453996484}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af14eadb172883f49b438b7fb6b8db7c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9f00a87fa21db374288b913f8b076d5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectibleType: penguin
+  animalType: 5
   rarity: 1
-  playerCharacter: {fileID: 0}
   collectibleLayer:
     serializedVersion: 2
-    m_Bits: 8
-  touchRadius: 2
+    m_Bits: 4294967295
+  maxClickScreenDistance: 80
+  maxCollectDistanceFromPlayer: 20
 --- !u!143 &8842701807193491630
 CharacterController:
   m_ObjectHideFlags: 0
