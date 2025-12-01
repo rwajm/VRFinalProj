@@ -26,7 +26,7 @@ public class ARViewUI : MonoBehaviour
         // UI 제목
         if (titleText != null)
         {
-            titleText.text = $"{GetAnimalDisplayName(type)} AR 보기";
+            titleText.text = $"{GetAnimalDisplayName(type)}";
         }
 
         // AR 동물 스폰
@@ -37,7 +37,6 @@ public class ARViewUI : MonoBehaviour
     {
         if (spawnRoot == null)
         {
-            // 만약 따로 지정 안 했으면, 일단 자기 자신 기준으로라도 생성
             spawnRoot = this.transform;
         }
 
@@ -48,20 +47,25 @@ public class ARViewUI : MonoBehaviour
             return;
         }
 
-        // 혹시 전에 스폰된 게 있으면 제거
         if (spawnedInstance != null)
         {
             Destroy(spawnedInstance);
         }
 
-        // 프리팹 생성
         spawnedInstance = Instantiate(prefab, spawnRoot);
 
-        // 위치/회전/스케일 초기화 (spawnRoot 기준)
         spawnedInstance.transform.localPosition = Vector3.zero;
         spawnedInstance.transform.localRotation = Quaternion.identity;
         spawnedInstance.transform.localScale = Vector3.one;
+
+        // ★ 여기 추가: ARAnimalController에 대상 전달
+        var controller = GetComponent<ARAnimalController>();
+        if (controller != null)
+        {
+            controller.SetTarget(spawnedInstance.transform);
+        }
     }
+
 
     private GameObject GetPrefab(AnimalType type)
     {
