@@ -1,125 +1,172 @@
 using System.Collections;
 using UnityEngine;
+#if UNITY_ANDROID
+using UnityEngine.Android;
+#endif
 
 public class GPSTracker : MonoBehaviour
 {
     [Header("GPS Settings")]
-    [SerializeField] private float updateInterval = 1f;
+    private readonly float updateInterval = 0.5f;
 
     [Header("Editor Test Settings")]
-    [SerializeField] private bool useEditorTestMode = true;
+    [SerializeField] private float testWalkSpeed = 4f;
     [SerializeField] private double testLatitude = 37.5826;
     [SerializeField] private double testLongitude = 127.0099;
-    [SerializeField] private float testHeading = 0f;  // 0=북, 90=동, 180=남, 270=서
 
-    // 현재 GPS 데이터
     public double CurrentLatitude { get; private set; }
     public double CurrentLongitude { get; private set; }
     public float CurrentHeading { get; private set; }
 
-    // 이벤트: 다른 스크립트에서 GPS 업데이트를 감지할 수 있음
     public delegate void OnGPSUpdateDelegate(double lat, double lon, float heading);
     public event OnGPSUpdateDelegate OnGPSUpdate;
 
+    private string statusMessage = "Initializing...";
+    private string compassDebug = "Compass: Waiting...";
+    private double lastTimestamp = 0;
+
+    private const double METERS_PER_LAT = 111319.9;
+    private double metersPerLon;
+
+    private bool isInitialized = false;
+
     void Start()
     {
-        // Compass 활성화 (방향 감지)
         Input.compass.enabled = true;
+        metersPerLon = METERS_PER_LAT * Mathf.Cos((float)(testLatitude * Mathf.Deg2Rad));
 
-        StartCoroutine(InitializeGPS());
+        if (Application.isEditor)
+        {
+            CurrentLatitude = testLatitude;
+            CurrentLongitude = testLongitude;
+            statusMessage = "Editor Mode";
+
+            isInitialized = true;
+            StartCoroutine(EditorTestLoop());
+        }
+        else
+        {
+            StartCoroutine(InitializeGPS());
+        }
+    }
+
+    void Update()
+    {
+        if (!Application.isEditor)
+        {
+            float trueHead = Input.compass.trueHeading;
+            float magHead = Input.compass.magneticHeading;
+
+            compassDebug = $"Raw True: {trueHead:F1} / Mag: {magHead:F1}\nAccuracy: {Input.compass.headingAccuracy}";
+
+            float targetHeading = (trueHead > 0) ? trueHead : magHead;
+            CurrentHeading = Mathf.MoveTowardsAngle(CurrentHeading, targetHeading, Time.deltaTime * 100f);
+        }
+
+        if (isInitialized && Time.frameCount == 2)
+        {
+            Debug.Log("[GPS] Sending initial update after all Start() completed");
+            OnGPSUpdate?.Invoke(CurrentLatitude, CurrentLongitude, CurrentHeading);
+        }
+    }
+
+    //void OnGUI()
+    //{
+    //    GUIStyle style = new GUIStyle();
+    //    style.fontSize = 45;
+    //    style.normal.textColor = Color.green;
+
+    //    string displayMsg = $"{statusMessage}\nLat: {CurrentLatitude:F6}\nLon: {CurrentLongitude:F6}\nLast GPS Update: {lastTimestamp:F1}\n{compassDebug}\nFinal Heading: {CurrentHeading:F1}";
+    //    GUI.Label(new Rect(50, 200, 1000, 800), displayMsg, style);
+
+    //    if (GUI.Button(new Rect(50, 1000, 400, 150), "<size=40>Force Update</size>"))
+    //    {
+    //        ForceUpdateEvent();
+    //    }
+    //}
+
+    IEnumerator EditorTestLoop()
+    {
+        while (true)
+        {
+            yield return null;
+            float moveX = Input.GetAxis("Horizontal");
+            float moveY = Input.GetAxis("Vertical");
+
+            if (moveX != 0 || moveY != 0)
+            {
+                double latChange = (moveY * testWalkSpeed * Time.deltaTime) / METERS_PER_LAT;
+                double lonChange = (moveX * testWalkSpeed * Time.deltaTime) / metersPerLon;
+                CurrentLatitude += latChange;
+                CurrentLongitude += lonChange;
+
+                float targetHeading = Mathf.Atan2(moveX, moveY) * Mathf.Rad2Deg;
+                if (targetHeading < 0) targetHeading += 360;
+                CurrentHeading = Mathf.LerpAngle(CurrentHeading, targetHeading, Time.deltaTime * 5f);
+
+                lastTimestamp = Time.time;
+                OnGPSUpdate?.Invoke(CurrentLatitude, CurrentLongitude, CurrentHeading);
+            }
+        }
     }
 
     IEnumerator InitializeGPS()
     {
-#if UNITY_EDITOR
-        if (useEditorTestMode)
+#if UNITY_ANDROID
+        if (!Permission.HasUserAuthorizedPermission(Permission.FineLocation))
         {
-            Debug.Log("GPS 트래커: 에디터 테스트 모드");
-            CurrentLatitude = testLatitude;
-            CurrentLongitude = testLongitude;
-            CurrentHeading = testHeading;
-
-            OnGPSUpdate?.Invoke(CurrentLatitude, CurrentLongitude, CurrentHeading);
-
-            // 에디터에서도 주기적 업데이트 (테스트용)
-            InvokeRepeating(nameof(UpdateTestData), updateInterval, updateInterval);
-            yield break;
+            Permission.RequestUserPermission(Permission.FineLocation);
+            yield return new WaitForSeconds(1.0f);
         }
 #endif
-
-        // GPS 권한 확인
         if (!Input.location.isEnabledByUser)
         {
-            Debug.LogError("GPS가 비활성화되어 있습니다.");
+            statusMessage = "GPS Disabled! Turn it on.";
             yield break;
         }
 
-        // GPS 서비스 시작
-        Input.location.Start(1f, 1f);
+        Input.location.Start(5f, 0.1f);
 
-        int maxWait = 20;
+        int maxWait = 15;
         while (Input.location.status == LocationServiceStatus.Initializing && maxWait > 0)
         {
+            statusMessage = $"Waiting GPS... {maxWait}";
             yield return new WaitForSeconds(1);
             maxWait--;
         }
 
-        if (maxWait < 1)
+        if (maxWait < 1 || Input.location.status == LocationServiceStatus.Failed)
         {
-            Debug.LogError("GPS 초기화 타임아웃");
-            yield break;
+            statusMessage = "GPS Failed. Compass should still work.";
         }
-
-        if (Input.location.status == LocationServiceStatus.Failed)
+        else
         {
-            Debug.LogError("GPS 위치를 가져올 수 없습니다.");
-            yield break;
+            statusMessage = "GPS Connected!";
+            isInitialized = true;
+            StartCoroutine(GPSLoop());
         }
-
-        Debug.Log("GPS 트래커 초기화 완료");
-
-        // 주기적 업데이트
-        InvokeRepeating(nameof(UpdateGPSData), 0f, updateInterval);
     }
 
-    void UpdateGPSData()
+    IEnumerator GPSLoop()
     {
-        if (Input.location.status != LocationServiceStatus.Running)
-            return;
+        while (true)
+        {
+            if (Input.location.status == LocationServiceStatus.Running)
+            {
+                CurrentLatitude = Input.location.lastData.latitude;
+                CurrentLongitude = Input.location.lastData.longitude;
+                lastTimestamp = Input.location.lastData.timestamp;
 
-        CurrentLatitude = Input.location.lastData.latitude;
-        CurrentLongitude = Input.location.lastData.longitude;
-        CurrentHeading = Input.compass.trueHeading;  // 진북 기준
+                OnGPSUpdate?.Invoke(CurrentLatitude, CurrentLongitude, CurrentHeading);
+            }
+            yield return new WaitForSeconds(updateInterval);
+        }
+    }
 
-        Debug.Log($"GPS 업데이트: 위도 {CurrentLatitude}, 경도 {CurrentLongitude}, 방향 {CurrentHeading}°");
-
+    void ForceUpdateEvent()
+    {
+        statusMessage = "Forced Update";
+        lastTimestamp = Time.time;
         OnGPSUpdate?.Invoke(CurrentLatitude, CurrentLongitude, CurrentHeading);
-    }
-
-    void UpdateTestData()
-    {
-        CurrentLatitude = testLatitude;
-        CurrentLongitude = testLongitude;
-        CurrentHeading = testHeading;
-
-        OnGPSUpdate?.Invoke(CurrentLatitude, CurrentLongitude, CurrentHeading);
-    }
-
-    void OnDestroy()
-    {
-        if (Input.location.isEnabledByUser)
-        {
-            Input.location.Stop();
-        }
-
-        Input.compass.enabled = false;
-    }
-
-    // 외부에서 현재 GPS 데이터를 가져오는 메서드
-    public void GetCurrentGPSData(out double lat, out double lon, out float heading)
-    {
-        lat = CurrentLatitude;
-        lon = CurrentLongitude;
-        heading = CurrentHeading;
     }
 }
