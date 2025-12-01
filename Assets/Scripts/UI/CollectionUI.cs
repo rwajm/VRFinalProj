@@ -1,6 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;   // ★ 버튼 제어용
 
 public class CollectionUI : MonoBehaviour
 {
@@ -15,19 +15,17 @@ public class CollectionUI : MonoBehaviour
 
     private void OnEnable()
     {
-        RefreshButtons();
-    }
-
-    private void Start()
-    {
+        // 씬이 켜질 때마다, 현재 컬렉션 상태에 맞춰 버튼 보이기/숨기기
         RefreshButtons();
     }
 
     private void RefreshButtons()
     {
-        // CollectionManager가 아직 안 만들어져 있으면 그냥 리턴
         if (CollectionManager.Instance == null)
+        {
+            Debug.LogWarning("[CollectionUI] CollectionManager.Instance is null");
             return;
+        }
 
         SetupButton(chickenButton, AnimalType.Chicken);
         SetupButton(deerButton, AnimalType.Deer);
@@ -44,35 +42,59 @@ public class CollectionUI : MonoBehaviour
 
         bool has = CollectionManager.Instance.HasAnimal(type);
 
-        // 1) 안 잡은 동물은 아예 안 보이게
+        // 잡은 동물만 버튼 활성화
         button.gameObject.SetActive(has);
 
-        // 2) 잡은 것만 보이니까, 따로 interactable 설정은 안 해도 되지만
-        //    혹시 나중에 쓸 일 있을까 봐 남겨두고 싶으면 이렇게:
-        // button.interactable = has;
+        // 혹시 버튼에 OnClick이 아직 안 걸려 있으면, 여기서 코드로도 걸어둘 수 있지만
+        // 지금은 인스펙터의 OnClick에 연결하는 쪽을 기준으로 할 거라서 여기선 X
     }
 
+    // -------------------------
+    //  버튼 OnClick에서 호출할 함수들
+    // -------------------------
+    public void OnClickChicken()
+    {
+        SelectAnimalAndGo(AnimalType.Chicken);
+    }
+
+    public void OnClickDeer()
+    {
+        SelectAnimalAndGo(AnimalType.Deer);
+    }
+
+    public void OnClickDog()
+    {
+        SelectAnimalAndGo(AnimalType.Dog);
+    }
+
+    public void OnClickHorse()
+    {
+        SelectAnimalAndGo(AnimalType.Horse);
+    }
+
+    public void OnClickKitty()
+    {
+        SelectAnimalAndGo(AnimalType.Kitty);
+    }
+
+    public void OnClickPenguin()
+    {
+        SelectAnimalAndGo(AnimalType.Penguin);
+    }
+
+    public void OnClickTiger()
+    {
+        SelectAnimalAndGo(AnimalType.Tiger);
+    }
+
+    private void SelectAnimalAndGo(AnimalType type)
+    {
+        SelectedAnimalHolder.SelectedAnimal = type;
+        SceneManager.LoadScene("ARViewScene");
+    }
 
     public void OnClickBackButton()
     {
         SceneManager.LoadScene("MainScene");
-    }
-
-    public void OnClickAnimalButton(string animalTypeName)
-    {
-        // 문자열 → AnimalType 변환
-        if (!System.Enum.TryParse(animalTypeName, out AnimalType type))
-            return;
-
-        // 아직 안 잡은 동물이면 그냥 무시 (혹시라도 버튼이 잘못 활성화된 경우 대비)
-        if (CollectionManager.Instance != null &&
-            !CollectionManager.Instance.HasAnimal(type))
-        {
-            return;
-        }
-
-        // 선택한 동물 정보 저장 → AR 씬에서 사용
-        SelectedAnimalHolder.SelectedAnimal = type;
-        SceneManager.LoadScene("ARViewScene");
     }
 }

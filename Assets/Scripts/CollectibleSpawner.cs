@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class CollectibleSpawner : MonoBehaviour
 {
+
     [System.Serializable]
     public class CollectibleType
     {
-        public string typeName;
+        public string typeName;            // enum 이름 그대로 사용 (Kitty, Dog, Chicken...)
         public GameObject prefab;
         public float spawnWeight = 1f;
         public Color debugColor = Color.white;
@@ -16,24 +17,24 @@ public class CollectibleSpawner : MonoBehaviour
     [System.Serializable]
     public class SpawnRule
     {
-        public string osmFeatureType;
+        public string osmFeatureType;      // "road", "green", "water"
         public List<CollectibleType> availableTypes;
         public float spawnDensity = 0.1f;
         public float minDistance = 5f;
     }
 
     [Header("Spawn Settings")]
-    [SerializeField] private float spawnHeightOffset = 0.5f;
+    [SerializeField] private float spawnHeightOffset = 3.0f;
     [SerializeField] private bool visualizeSpawnPoints = true;
 
     [Header("Prefab Registry")]
-    [SerializeField] private GameObject catPrefab;
-    [SerializeField] private GameObject dogPrefab;
-    [SerializeField] private GameObject chickenPrefab;
-    [SerializeField] private GameObject deerPrefab;
-    [SerializeField] private GameObject horsePrefab;
-    [SerializeField] private GameObject tigerPrefab;
-    [SerializeField] private GameObject penguinPrefab;
+    [SerializeField] private GameObject KittyPrefab;
+    [SerializeField] private GameObject DogPrefab;
+    [SerializeField] private GameObject ChickenPrefab;
+    [SerializeField] private GameObject DeerPrefab;
+    [SerializeField] private GameObject HorsePrefab;
+    [SerializeField] private GameObject TigerPrefab;
+    [SerializeField] private GameObject PenguinPrefab;
 
     [Header("References")]
     [SerializeField] private GPSTracker gpsTracker;
@@ -49,10 +50,15 @@ public class CollectibleSpawner : MonoBehaviour
         InitializeRules();
 
         if (gpsTracker == null) gpsTracker = FindObjectOfType<GPSTracker>();
+
+
+
     }
+
+
     void InitializeRules()
     {
-        // 도로
+        // 도로 = Kitty / Dog / Chicken
         SpawnRule roadRule = new()
         {
             osmFeatureType = "road",
@@ -60,13 +66,13 @@ public class CollectibleSpawner : MonoBehaviour
             minDistance = 10f,
             availableTypes = new List<CollectibleType>
             {
-                new() { typeName = "cat", prefab = catPrefab, spawnWeight = 4f, debugColor = Color.yellow },
-                new() { typeName = "dog", prefab = dogPrefab, spawnWeight = 4f, debugColor = Color.cyan },
-                new() { typeName = "chicken", prefab = chickenPrefab, spawnWeight = 2f, debugColor = Color.white }
+                new() { typeName = "Kitty", prefab = KittyPrefab, spawnWeight = 4f, debugColor = Color.yellow },
+                new() { typeName = "Dog", prefab = DogPrefab, spawnWeight = 4f, debugColor = Color.cyan },
+                new() { typeName = "Chicken", prefab = ChickenPrefab, spawnWeight = 2f, debugColor = Color.white }
             }
         };
 
-        // 녹지
+        // 녹지 = Deer / Horse / Tiger
         SpawnRule greenRule = new()
         {
             osmFeatureType = "green",
@@ -74,13 +80,13 @@ public class CollectibleSpawner : MonoBehaviour
             minDistance = 15f,
             availableTypes = new List<CollectibleType>
             {
-                new() { typeName = "deer", prefab = deerPrefab, spawnWeight = 6f, debugColor = Color.green },
-                new() { typeName = "horse", prefab = horsePrefab, spawnWeight = 3f, debugColor = new Color(0.6f, 0.4f, 0.2f) },
-                new() { typeName = "tiger", prefab = tigerPrefab, spawnWeight = 1f, debugColor = new Color(1f, 0.5f, 0f) }
+                new() { typeName = "Deer", prefab = DeerPrefab, spawnWeight = 6f, debugColor = Color.green },
+                new() { typeName = "Horse", prefab = HorsePrefab, spawnWeight = 3f, debugColor = new Color(0.6f, 0.4f, 0.2f) },
+                new() { typeName = "Tiger", prefab = TigerPrefab, spawnWeight = 1f, debugColor = new Color(1f, 0.5f, 0f) }
             }
         };
 
-        // 수원
+        // 수역 = Penguin / Deer
         SpawnRule waterRule = new()
         {
             osmFeatureType = "water",
@@ -88,8 +94,8 @@ public class CollectibleSpawner : MonoBehaviour
             minDistance = 12f,
             availableTypes = new List<CollectibleType>
             {
-                new() { typeName = "penguin", prefab = penguinPrefab, spawnWeight = 2f, debugColor = Color.blue },
-                new() { typeName = "deer", prefab = deerPrefab, spawnWeight = 8f, debugColor = Color.green }
+                new() { typeName = "Penguin", prefab = PenguinPrefab, spawnWeight = 2f, debugColor = Color.blue },
+                new() { typeName = "Deer", prefab = DeerPrefab, spawnWeight = 8f, debugColor = Color.green }
             }
         };
 
@@ -99,6 +105,7 @@ public class CollectibleSpawner : MonoBehaviour
 
         Debug.Log("[Spawner] Default animal spawn rules initialized");
     }
+
     public void ProcessOSMFeature(string featureType, List<Vector3> positions, Dictionary<string, string> tags)
     {
         if (positions == null || positions.Count == 0)
@@ -240,9 +247,7 @@ public class CollectibleSpawner : MonoBehaviour
         string id = $"{type.typeName}_{position.GetHashCode()}";
 
         if (spawnedObjects.ContainsKey(id))
-        {
             return;
-        }
 
         GameObject obj = Instantiate(type.prefab, position, Quaternion.identity, transform);
         obj.name = id;

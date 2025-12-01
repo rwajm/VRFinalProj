@@ -303,6 +303,7 @@ GameObject:
   - component: {fileID: 406574625}
   - component: {fileID: 406574624}
   - component: {fileID: 406574623}
+  - component: {fileID: 406574626}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -328,7 +329,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -384,6 +385,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &406574626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 406574622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!1 &415086451
 GameObject:
   m_ObjectHideFlags: 0
@@ -604,13 +649,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   titleText: {fileID: 4561093}
   spawnRoot: {fileID: 1931905265}
-  chickenPrefab: {fileID: 8073443194988779917, guid: 3be3e2ce48c5e594baed41a06af997a0, type: 3}
-  deerPrefab: {fileID: 7402009758359158996, guid: 1be08ab4418e4f146bca729f54955929, type: 3}
-  dogPrefab: {fileID: 2629182449500102118, guid: b15b3acca6cd9854a9bc2816da081d76, type: 3}
-  horsePrefab: {fileID: 3851015956068934394, guid: 93ce7bffb7ea4fa4b8524b8ba147246f, type: 3}
-  kittyPrefab: {fileID: 6397291155531275063, guid: eed9f26ea29c48f43a2fc4f27751b2cb, type: 3}
-  penguinPrefab: {fileID: 1527881004230699645, guid: 3d99b15de2a5ba8449f44a9b7d7e625b, type: 3}
-  tigerPrefab: {fileID: 5883155896844355918, guid: 25915d6aa9d3c8147b80a3f14fbaa956, type: 3}
+  chickenPrefab: {fileID: 5902795145402014879, guid: 2049a5bcd47d96a4392db38a52b4879b, type: 3}
+  deerPrefab: {fileID: 2602658607503993565, guid: cc542a87e3360a34797398131c220470, type: 3}
+  dogPrefab: {fileID: 7537317309847834111, guid: 1b1cbb2cf146e7049bd43febbc782907, type: 3}
+  horsePrefab: {fileID: 6799519071901880902, guid: a9968831c8ef51541a6560fc42608c7b, type: 3}
+  kittyPrefab: {fileID: 6332367137715055666, guid: 0234d5ecc7103bb4396c3f3b8892f677, type: 3}
+  penguinPrefab: {fileID: 7681152787453996484, guid: 499409deaadfcab4085713abcfd57427, type: 3}
+  tigerPrefab: {fileID: 6641037067501508665, guid: b69716665d7089945a5a05840bbd7d3b, type: 3}
 --- !u!114 &945432195
 MonoBehaviour:
   m_ObjectHideFlags: 0

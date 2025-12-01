@@ -204,7 +204,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1358570666}
   m_HandleRect: {fileID: 1358570665}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -408,8 +408,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1691404445}
         m_TargetAssemblyTypeName: CollectionUI, Assembly-CSharp
-        m_MethodName: OnClickAnimalButton
-        m_Mode: 5
+        m_MethodName: OnClickChicken
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -677,8 +677,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1691404445}
         m_TargetAssemblyTypeName: CollectionUI, Assembly-CSharp
-        m_MethodName: OnClickAnimalButton
-        m_Mode: 5
+        m_MethodName: OnClickTiger
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -810,8 +810,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1691404445}
         m_TargetAssemblyTypeName: CollectionUI, Assembly-CSharp
-        m_MethodName: OnClickAnimalButton
-        m_Mode: 5
+        m_MethodName: OnClickDog
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -943,8 +943,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1691404445}
         m_TargetAssemblyTypeName: CollectionUI, Assembly-CSharp
-        m_MethodName: OnClickAnimalButton
-        m_Mode: 5
+        m_MethodName: OnClickKitty
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1760,8 +1760,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1691404445}
         m_TargetAssemblyTypeName: CollectionUI, Assembly-CSharp
-        m_MethodName: OnClickAnimalButton
-        m_Mode: 5
+        m_MethodName: OnClickHorse
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1893,8 +1893,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1691404445}
         m_TargetAssemblyTypeName: CollectionUI, Assembly-CSharp
-        m_MethodName: OnClickAnimalButton
-        m_Mode: 5
+        m_MethodName: OnClickDeer
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2294,8 +2294,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1691404445}
         m_TargetAssemblyTypeName: CollectionUI, Assembly-CSharp
-        m_MethodName: OnClickAnimalButton
-        m_Mode: 5
+        m_MethodName: OnClickPenguin
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3429,9 +3429,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 1387686741}
     m_Modifications:
     - target: {fileID: 2056280915117819388, guid: ad1c803986793084fb0de8c902df74e7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2056280915117819388, guid: ad1c803986793084fb0de8c902df74e7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1691404445}
+    - target: {fileID: 2056280915117819388, guid: ad1c803986793084fb0de8c902df74e7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickDeer
+      objectReference: {fileID: 0}
     - target: {fileID: 7166269268830640667, guid: ad1c803986793084fb0de8c902df74e7, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3534,9 +3542,17 @@ PrefabInstance:
       value: Kitty
       objectReference: {fileID: 0}
     - target: {fileID: 8739498620344889926, guid: 229e337549b940941aedf3d45702eecd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8739498620344889926, guid: 229e337549b940941aedf3d45702eecd, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1691404445}
+    - target: {fileID: 8739498620344889926, guid: 229e337549b940941aedf3d45702eecd, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickKitty
+      objectReference: {fileID: 0}
     - target: {fileID: 8836507251150264445, guid: 229e337549b940941aedf3d45702eecd, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3631,9 +3647,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 1387686741}
     m_Modifications:
     - target: {fileID: 226863266992156305, guid: 3f525dc041a718e43a765cdacf77b1c6, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 226863266992156305, guid: 3f525dc041a718e43a765cdacf77b1c6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1691404445}
+    - target: {fileID: 226863266992156305, guid: 3f525dc041a718e43a765cdacf77b1c6, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickChicken
+      objectReference: {fileID: 0}
     - target: {fileID: 286477678560275091, guid: 3f525dc041a718e43a765cdacf77b1c6, type: 3}
       propertyPath: m_Name
       value: Chicken
@@ -3732,9 +3756,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 1387686741}
     m_Modifications:
     - target: {fileID: 7134497533904317376, guid: fb94f08c190d0464093e5f0277d9ad46, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7134497533904317376, guid: fb94f08c190d0464093e5f0277d9ad46, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1691404445}
+    - target: {fileID: 7134497533904317376, guid: fb94f08c190d0464093e5f0277d9ad46, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickPenguin
+      objectReference: {fileID: 0}
     - target: {fileID: 7728098045580575700, guid: fb94f08c190d0464093e5f0277d9ad46, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -3913,9 +3945,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3642811586331708196, guid: 749dec7c8fab7504b8fedc37308cbc36, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3642811586331708196, guid: 749dec7c8fab7504b8fedc37308cbc36, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1691404445}
+    - target: {fileID: 3642811586331708196, guid: 749dec7c8fab7504b8fedc37308cbc36, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickHorse
+      objectReference: {fileID: 0}
     - target: {fileID: 5782177503508257086, guid: 749dec7c8fab7504b8fedc37308cbc36, type: 3}
       propertyPath: m_Name
       value: Horse
@@ -4014,9 +4054,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2387946235927533766, guid: 0d7496deb47fb324280f6a1f6295d4b5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2387946235927533766, guid: 0d7496deb47fb324280f6a1f6295d4b5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1691404445}
+    - target: {fileID: 2387946235927533766, guid: 0d7496deb47fb324280f6a1f6295d4b5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickTiger
+      objectReference: {fileID: 0}
     - target: {fileID: 3510721221784222299, guid: 0d7496deb47fb324280f6a1f6295d4b5, type: 3}
       propertyPath: m_Name
       value: Tiger
@@ -4135,9 +4183,17 @@ PrefabInstance:
       value: Dog
       objectReference: {fileID: 0}
     - target: {fileID: 7958726106941523483, guid: 7656a9127ab337f4793527499655e3c6, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7958726106941523483, guid: 7656a9127ab337f4793527499655e3c6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1691404445}
+    - target: {fileID: 7958726106941523483, guid: 7656a9127ab337f4793527499655e3c6, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnClickDog
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
