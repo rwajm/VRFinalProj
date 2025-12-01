@@ -96,7 +96,7 @@ public class MainUI : MonoBehaviour
             capturePopupRoot.SetActive(true);
 
         if (captureTitleText != null)
-            captureTitleText.text = $"야생의 {GetAnimalDisplayName(currentAnimalInPopup)}가 나타났다!";
+            captureTitleText.text = $"Wild {GetAnimalDisplayName(currentAnimalInPopup)}!";
     }
 
     // ------------------------------------------------------
@@ -115,7 +115,7 @@ public class MainUI : MonoBehaviour
         if (r < 0.2f)
         {
             if (captureTitleText != null)
-                captureTitleText.text = "포획에 실패했다...";
+                captureTitleText.text = "Fail...";
             return;
         }
 
@@ -150,7 +150,7 @@ public class MainUI : MonoBehaviour
 
         var data = GameManager.Instance.playerData;
         if (levelUpMessageText != null)
-            levelUpMessageText.text = $"레벨 업!\n현재 레벨: {data.level}";
+            levelUpMessageText.text = $"Level UP!\nNow Lv: {data.level}";
     }
 
     public void OnClickLevelUpOkButton()
